@@ -33,7 +33,7 @@ const links = data.results.map((page) => {
 });
 
 await writeFile(
-  "links.json",
+  "src/data/links.json",
   JSON.stringify(links, null, 2)
 );
 

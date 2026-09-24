@@ -1,3 +1,5 @@
+import { writeFile } from "node:fs/promises";
+
 const response = await fetch(
   `https://api.notion.com/v1/data_sources/${process.env.NOTION_DATABASE_ID}/query`,
   {
@@ -18,8 +20,21 @@ if (!response.ok) {
 
 const data = await response.json();
 
-console.log(`Found ${data.results.length} links`);
+const links = data.results.map((page) => {
+  const properties = page.properties;
 
-for (const page of data.results) {
-  console.log(JSON.stringify(page, null, 2));
-}
+  return {
+    name: properties.Name.title[0]?.plain_text ?? "",
+    url: properties.url.url ?? "",
+    icon: properties.Icon.rich_text[0]?.plain_text ?? "",
+    order: properties.Order.number ?? 0,
+    active: properties.Active.checkbox
+  };
+});
+
+await writeFile(
+  "links.json",
+  JSON.stringify(links, null, 2)
+);
+
+console.log(`Saved ${links.length} links to links.json`);

@@ -24,11 +24,11 @@ const links = data.results.map((page) => {
   const properties = page.properties;
 
   return {
-    name: properties.Name.title[0]?.plain_text ?? "",
+    name: properties.name.title[0]?.plain_text ?? "",
     url: properties.url.url ?? "",
-    icon: properties.Icon.rich_text[0]?.plain_text ?? "",
-    order: properties.Order.number ?? 0,
-    active: properties.Active.checkbox
+    icon: properties.icon.rich_text[0]?.plain_text ?? "",
+    order: properties.order.number ?? 0,
+    active: properties.active.checkbox
   };
 });
 

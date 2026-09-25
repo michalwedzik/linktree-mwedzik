@@ -1,43 +1,50 @@
-# Astro Starter Kit: Minimal
+# Linktree
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal Linktree-style page built with [Astro](https://astro.build/) and hosted on GitHub Pages.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Links are managed in Notion and synchronized manually using GitHub Actions.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## How it works
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+Notion
+  ↓
+GitHub Actions
+  ↓
+Notion API
+  ↓
+links.json
+  ↓
+Astro build
+  ↓
+GitHub Pages
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Update links
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. Edit links in the Notion database.
+2. Open **GitHub → Actions → Sync Notion and Deploy**.
+3. Click **Run workflow**.
+4. GitHub Actions fetches the latest links from Notion and deploys the page.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Local development
 
-## 🧞 Commands
+```bash
+npm install
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+Build locally:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```bash
+npm run build
+```
 
-## 👀 Want to learn more?
+## Environment variables
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The GitHub Actions workflow requires:
+
+* `NOTION_TOKEN`
+* `NOTION_DATABASE_ID`
+
+These should be configured as GitHub repository secrets.
